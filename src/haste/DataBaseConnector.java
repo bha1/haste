@@ -5,33 +5,67 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import oracle.jdbc.OracleDriver;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 public class DataBaseConnector {
+
+	private static final Logger logger = Logger.getLogger(DataBaseConnector.class.getName());
+
+	private String URL_PREFIX = "jdbc:oracle:thin:@";
 	
-	public static void connect(String[] args) {
-		String URL = "jdbc:oracle:thin:@hostName:1521:Service";
-		String USER = "user";
-		String PASS = "password";
+	static{
+		Logger.getLogger(DataBaseConnector.class.getName()).setLevel(Level.INFO);
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");  
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			Statement stmt=conn.createStatement();  
-			ResultSet rs=stmt.executeQuery("SELECT S.SUBMISSION_ID, S.OFFER_ID,  S.APPLICANT_STATUS, S.SUBMISSION_STATUS, TO_CHAR(S.LAST_UPDATE_DATE, 'DD/Mon/YY HH:MM:SS AM'),S.FACILITY_ID,S.LOAN_AMOUNT,S.OUTCOME_STRING  FROM DIGX_OR_SUBMISSION_SUMMARY S WHERE OFFER_ID NOT IN ('NCS001','NCS006','NCS007') AND S.SUBMISSION_STATUS = 'DEDUPE' ORDER BY LAST_UPDATE_DATE DESC ");  
-			while (rs.next()) {
-				int columnCount = rs.getMetaData().getColumnCount();
-				for(int i = 1 ; i<=columnCount;i++){
-					System.out.print(" "+rs.getString(i));
-				}
-				System.out.println(" ");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			logger.info("Oracle driver loaded");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			logger.fatal("Oracle DB dependency can't be resolved.");
+			e.printStackTrace();
+		}  
+	}
+	
+	public Connection getConnection(String url,String userName, String password){
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL_PREFIX+url, userName, password);
+			logger.info("Connection established with"+url);
+		} catch (SQLException e) {
+			logger.fatal("Data-base connection can't be established");
 			e.printStackTrace();
 		}
+		return conn;
 	}
+	
+	public Object[][] getResponseArray(Connection conn, String query){
+		Object[][] resultSets = null;
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs=stmt.executeQuery(query);
+			int columnCount = rs.getMetaData().getColumnCount();
+			ArrayList<Object[]> list = new ArrayList<>();
+			Object[] headerSet = new Object[columnCount];
+			for(int i = 1;i<=columnCount ;i++){
+				//TODO this will break at some time or other
+				headerSet[i-1] = rs.getMetaData().getColumnName(i);
+			}
+			list.add(headerSet);
+			while(rs.next()){
+				Object[] rowSet = new Object[columnCount];
+				for(int i = 1 ; i<=columnCount;i++){
+					rowSet[i-1] = rs.getObject(i);
+				}
+				list.add(rowSet);
+			}
+			resultSets = list.toArray(new Object[list.size()][]);
+			logger.info("Statement execution complete.");
+		} catch (SQLException e) {
+			logger.info("faliure while executing sql query.");
+			e.printStackTrace();
+		}  
+		return resultSets;
+	}
+
 }

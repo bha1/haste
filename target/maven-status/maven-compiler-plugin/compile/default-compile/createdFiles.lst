@@ -2,5 +2,5 @@ haste\BannerPrinter.class
 test\ApplicationTest.class
 haste\Application.class
 haste\DataBaseConnector.class
+haste\ExcelSheetUtil.class
 resources\HasteConstants.class
-haste\ExcelSheetGenerator.class
