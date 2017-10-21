@@ -15,6 +15,7 @@ public static void main(String[] args) {
 	logger.debug("this is in debug mode");
 	logger.info("info mode");
 	logger.error("this is not working");
+	
 	logger.warn("warning");
 	logger.fatal("fatal error");
 	DataBaseConnector.connect(null);

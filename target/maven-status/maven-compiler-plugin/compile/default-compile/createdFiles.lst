@@ -1,0 +1,6 @@
+haste\BannerPrinter.class
+test\ApplicationTest.class
+haste\Application.class
+haste\DataBaseConnector.class
+resources\HasteConstants.class
+haste\ExcelSheetGenerator.class
