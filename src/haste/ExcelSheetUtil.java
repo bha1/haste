@@ -26,7 +26,7 @@ public class ExcelSheetUtil {
 	
 	public void writeSheetToDisk(XSSFWorkbook workbook){
 	    try {
-	        FileOutputStream outputStream = new FileOutputStream("/"+HasteConstants.EXCELFILENAME);
+	        FileOutputStream outputStream = new FileOutputStream(HasteConstants.EXCELFILENAME);
 	        workbook.write(outputStream);
 	        workbook.close();
 	        outputStream.close();
