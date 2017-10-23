@@ -52,19 +52,19 @@ public class Application {
 		ExcelSheetUtil generator = new ExcelSheetUtil();
 		XSSFWorkbook workbook = generator.getNewWorkBook();
 		XSSFSheet sheet = null;
-		ScriptBuilder builder = new ScriptBuilder();
+		PreparedStatementBuilder builder = new PreparedStatementBuilder();
 		Object[][] objArr = connector.getResponseArray(obpConn,
-				builder.getScript("obp_script1.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_1}));
+				builder.getPreparedStatement(obpConn,"obp_script1.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_1}));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		objArr = connector.getResponseArray(obpConn,
-				builder.getScript("obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_2}));
+				builder.getPreparedStatement(obpConn,"obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_2}));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP2");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		objArr = connector.getResponseArray(obdxConn,
-				builder.getScript("obdx_script1.txt", HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME,null));
+				builder.getPreparedStatement(obdxConn,"obdx_script1.txt", HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME,null));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBDX1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 

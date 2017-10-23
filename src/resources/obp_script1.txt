@@ -2,4 +2,4 @@ SELECT a.submission_id,  a.application_id,  E.PARTY_ID,  e.external_id_value AS 
 k.automatic_kyc_status,  M.REF_NUM_AGENCY,  z.perf_elec_kyc_consent FROM NGPCOB_SCHEMA.flx_or_submission_summary_b a,  NGPCOB_SCHEMA.flx_pi_external_ids e,  NGPCOB_SCHEMA.flx_or_applicants p,
 NGPCOB_SCHEMA.FLX_PI_KYC_HISTORIES_B k,  NGPCOB_SCHEMA.CZ_NAB_PI_PARTIES_B Z,  NGPCOB_SCHEMA.flx_pi_kyc_ver_sum_b M WHERE a.submission_id  = p.submission_id  AND e.party_id  = p.internal_party_id 
 AND e.party_id  = k.party_id AND Z.PARTY_ID  = K.PARTY_ID AND M.PARTY_ID  = K.PARTY_ID AND e.external_id_type = 'MEID' AND a.market_entity   <> 'UBANK' AND 
-a.initiated_by     = 'OBDX_ANONYMOUS_USER' AND A.APPLICATION_DESCRIPTION= 'Credit Card' AND TRUNC(a.creation_date)   >= to_date('28082017', 'DDMMYYYY') ORDER BY   A.CREATION_DATE DESC
+a.initiated_by     = 'OBDX_ANONYMOUS_USER' AND A.APPLICATION_DESCRIPTION= 'Credit Card' AND TRUNC(a.creation_date)   >= ? ORDER BY   A.CREATION_DATE DESC

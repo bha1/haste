@@ -2,6 +2,7 @@ package haste;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,11 +40,10 @@ public class DataBaseConnector {
 		return conn;
 	}
 	
-	public Object[][] getResponseArray(Connection conn, String query){
+	public Object[][] getResponseArray(Connection conn, PreparedStatement preparedStatement){
 		Object[][] resultSets = null;
 		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs=stmt.executeQuery(query);
+			ResultSet rs=preparedStatement.executeQuery();
 			int columnCount = rs.getMetaData().getColumnCount();
 			ArrayList<Object[]> list = new ArrayList<>();
 			Object[] headerSet = new Object[columnCount];

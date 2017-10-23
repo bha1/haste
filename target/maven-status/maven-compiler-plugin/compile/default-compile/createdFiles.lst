@@ -1,8 +1,8 @@
 haste\BannerPrinter.class
 test\java\ScriptBuilderTest.class
-haste\Application.class
-haste\ScriptBuilder.class
 haste\DataBaseConnector.class
+haste\PreparedStatementBuilder.class
+resources\HasteConstants.class
+haste\Application.class
 haste\ExcelSheetUtil.class
 test\java\ApplicationTest.class
-resources\HasteConstants.class
