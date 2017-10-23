@@ -67,5 +67,15 @@ public class DataBaseConnector {
 		}  
 		return resultSets;
 	}
+	
+	public static void closeConnection(Connection connection){
+		try {
+			connection.close();
+			logger.info("connection closed");
+		} catch (SQLException e) {
+			logger.fatal("Something failed while closing connection");
+			e.printStackTrace();
+		}
+	}
 
 }
