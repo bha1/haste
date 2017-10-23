@@ -21,7 +21,7 @@ public class ScriptBuilder {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
+		logger.info(builder.toString());
 		return builder.toString();
 	}
 }

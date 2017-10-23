@@ -43,12 +43,12 @@ public class Application {
 
 		logger.info("Starting application!");
 		new BannerPrinter().printBanner();
-		Console console = System.console();
-		console.printf("Enter password for OBP DB \n");
-		char[] obpPassword = console.readPassword();
-		console.printf("\n");
-		console.printf("Enter password for OBP DB \n");
-		char[] obdxPassword = console.readPassword();
+//		Console console = System.console();
+//		console.printf("Enter password for OBP DB \n");
+//		char[] obpPassword = console.readPassword();
+//		console.printf("\n");
+//		console.printf("Enter password for OBP DB \n");
+//		char[] obdxPassword = console.readPassword();
 		DataBaseConnector connector = new DataBaseConnector();
 
 		// String str = ("SELECT S.SUBMISSION_ID, S.OFFER_ID,
@@ -58,24 +58,24 @@ public class Application {
 		// DIGX_OR_SUBMISSION_SUMMARY S WHERE OFFER_ID NOT IN
 		// ('NCS001','NCS006','NCS007') AND S.SUBMISSION_STATUS = 'DEDUPE' ORDER
 		// BY LAST_UPDATE_DATE DESC ");
-		Connection obpConn = connector.getConnection(OBP_URL, OBP_USERNAME, obpPassword.toString());
-		Connection obdxConn = connector.getConnection(OBDX_URL, OBDX_USERNAME, obdxPassword.toString());
+		Connection obpConn = connector.getConnection(OBP_URL, OBP_USERNAME, OBP_PASSWORD);
+		Connection obdxConn = connector.getConnection(OBDX_URL, OBDX_USERNAME, OBDX_PASSWORD);
 		ExcelSheetUtil generator = new ExcelSheetUtil();
 		XSSFWorkbook workbook = generator.getNewWorkBook();
 		XSSFSheet sheet = null;
 		ScriptBuilder builder = new ScriptBuilder();
 		Object[][] objArr = connector.getResponseArray(obpConn,
-				builder.getScript("obp_script1.txt", HasteConstants.NGPCOB_SCHEMA, "NGPCOB"));
+				builder.getScript("obp_script1.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		connector.getResponseArray(obpConn,
-				builder.getScript("obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, "NGPCOB"));
+				builder.getScript("obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP2");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		connector.getResponseArray(obdxConn,
-				builder.getScript("obdx_script1.txt", HasteConstants.OBDX_SCHEMA, "OBDX_PRD"));
+				builder.getScript("obdx_script1.txt", HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBDX1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
