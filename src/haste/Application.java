@@ -69,12 +69,12 @@ public class Application {
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		connector.getResponseArray(obpConn,
+		objArr = connector.getResponseArray(obpConn,
 				builder.getScript("obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP2");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		connector.getResponseArray(obdxConn,
+		objArr = connector.getResponseArray(obdxConn,
 				builder.getScript("obdx_script1.txt", HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBDX1");
 		generator.writeRecordSetToSheet(objArr, sheet);
