@@ -17,7 +17,7 @@ public class Application {
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
 		Logger.getLogger(Application.class.getName()).setLevel(Level.INFO);
-		
+
 		// read all params from prompt
 		String OBP_URL = args[0];
 		String OBP_SCHEMA_NAME = args[1];
@@ -29,46 +29,42 @@ public class Application {
 		String OBDX_PASSWORD = args[7];
 		String DATE_SCRIPT_1 = args[8];
 		String DATE_SCRIPT_2 = args[9];
-		
 
 		logger.info("Starting application!");
 		new BannerPrinter().printBanner();
-		
-		//TODO this is a future feature
-//		Console console = System.console();
-//		console.printf("Enter password for OBP DB \n");
-//		char[] obpPassword = console.readPassword();
-//		console.printf("\n");
-//		console.printf("Enter password for OBP DB \n");
-//		char[] obdxPassword = console.readPassword();
-		
-		
-		
+
+		// TODO this is a future feature
+		// Console console = System.console();
+		// console.printf("Enter password for OBP DB \n");
+		// char[] obpPassword = console.readPassword();
+		// console.printf("\n");
+		// console.printf("Enter password for OBP DB \n");
+		// char[] obdxPassword = console.readPassword();
+
 		DataBaseConnector connector = new DataBaseConnector();
-		
+
 		Connection obpConn = connector.getConnection(OBP_URL, OBP_USERNAME, OBP_PASSWORD);
 		Connection obdxConn = connector.getConnection(OBDX_URL, OBDX_USERNAME, OBDX_PASSWORD);
-		
+
 		ExcelSheetUtil generator = new ExcelSheetUtil();
 		XSSFWorkbook workbook = generator.getNewWorkBook();
 		XSSFSheet sheet = null;
 		PreparedStatementBuilder builder = new PreparedStatementBuilder();
-		Object[][] objArr = connector.getResponseArray(obpConn,
-				builder.getPreparedStatement(obpConn,"obp_script1.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_1}));
+		Object[][] objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script1.txt",
+				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_1 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		objArr = connector.getResponseArray(obpConn,
-				builder.getPreparedStatement(obpConn,"obp_script2.txt", HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME,new String[]{DATE_SCRIPT_2}));
+		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script2.txt",
+				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBP2");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		objArr = connector.getResponseArray(obdxConn,
-				builder.getPreparedStatement(obdxConn,"obdx_script1.txt", HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME,null));
+		objArr = connector.getResponseArray(obdxConn, builder.getPreparedStatement(obdxConn, "obdx_script1.txt",
+				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, "OBDX1");
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		
 		DataBaseConnector.closeConnection(obpConn);
 		DataBaseConnector.closeConnection(obdxConn);
 		generator.writeSheetToDisk(workbook);
