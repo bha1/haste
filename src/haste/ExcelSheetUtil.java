@@ -51,10 +51,6 @@ public class ExcelSheetUtil {
 					cell.setCellValue((String) field);
 				} else if (field instanceof Integer) {
 					cell.setCellValue((Integer) field);
-				}else if(field instanceof Timestamp){
-					cell.setCellValue((Date) field);
-				}else if(field instanceof Date){
-					cell.setCellValue((Date) field);
 				}
 			}
 		}
