@@ -70,8 +70,9 @@ public class DataBaseConnector {
 
 	public static void closeConnection(Connection connection) {
 		try {
+			String url = connection.getMetaData().getURL();
 			connection.close();
-			logger.info("connection closed" + connection.getMetaData().getURL());
+			logger.info("closed connection :" + url);
 		} catch (SQLException e) {
 			logger.fatal("Something failed while closing connection");
 			e.printStackTrace();

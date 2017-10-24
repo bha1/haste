@@ -1,6 +1,25 @@
-SELECT a.submission_id,   a.application_id,   E.PARTY_ID,   e.external_id_value AS MEID,   a.application_status_state_type, concat(SUBSTR(a.party_names, 1, 5),'******'),   a.creation_date,   
-k.automatic_kyc_status,   M.REF_NUM_AGENCY,   z.perf_elec_kyc_consent FROM NGPCOB_SCHEMA.flx_or_submission_summary_b a,   NGPCOB_SCHEMA.flx_pi_external_ids e,   NGPCOB_SCHEMA.flx_or_applicants p,   
-NGPCOB_SCHEMA.FLX_PI_KYC_HISTORIES_B k,   NGPCOB_SCHEMA.CZ_NAB_PI_PARTIES_B Z,   NGPCOB_SCHEMA.flx_pi_kyc_ver_sum_b M WHERE a.submission_id  = p.submission_id AND e.party_id= p.internal_party_id AND E.PARTY_ID= 
-K.PARTY_ID AND Z.PARTY_ID= K.PARTY_ID AND M.PARTY_ID= K.PARTY_ID AND e.external_id_type = 'MEID' AND a.market_entity   <> 'UBANK' AND a.initiated_by = 'OBDX_ANONYMOUS_USER' AND 
-A.APPLICATION_DESCRIPTION<> 'Credit Card' AND a.application_status_state_type ='ACCOUNT_OPENING_DONE' AND TRUNC(A.CREATION_DATE) >= ? ORDER BY   A.CREATION_DATE 
-DESC
+	select a.submission_id,
+		   a.application_id,
+		   e.party_id,
+		   e.external_id_value as MEID,
+		   a.application_status_state_type,
+		   concat(SUBSTR(a.party_names, 1, 5), '******') AS party_names,
+		   a.creation_date,
+		   k.automatic_kyc_status,
+		   z.party_id,
+		   z.perf_elec_kyc_consent
+	  from  NGPCOB_SCHEMA.flx_or_submission_summary_b a,
+		   NGPCOB_SCHEMA.flx_pi_external_ids         e,
+		   NGPCOB_SCHEMA.flx_or_applicants           p,
+		   NGPCOB_SCHEMA.FLX_PI_KYC_HISTORIES_B      k,
+		   NGPCOB_SCHEMA.cz_nab_pi_parties_b         z
+	where a.submission_id = p.submission_id
+	   and e.party_id = p.internal_party_id
+	   and e.party_id = k.party_id
+	   and z.party_id = k.party_id
+	   and e ngpcob..external_id_type = 'MEID'
+	   and a.market_entity <> 'UBANK'
+	   and a.initiated_by = 'OBDX_ANONYMOUS_USER'
+	   and a.application_status_state_type = 'ACCOUNT_OPENING_DONE'
+	   and trunc(a.creation_date) >= ?
+			  a.creation_date desc

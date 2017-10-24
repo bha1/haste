@@ -62,17 +62,22 @@ public class Application {
 		PreparedStatementBuilder builder = new PreparedStatementBuilder();
 		Object[][] objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script1.txt",
 				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_1 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, "OBP1");
+		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[0]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script2.txt",
 				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, "OBP2");
+		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[1]);
+		generator.writeRecordSetToSheet(objArr, sheet);
+		
+		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script3.txt",
+				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
+		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[2]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		objArr = connector.getResponseArray(obdxConn, builder.getPreparedStatement(obdxConn, "obdx_script1.txt",
 				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, "OBDX1");
+		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		DataBaseConnector.closeConnection(obpConn);
