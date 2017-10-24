@@ -1,6 +1,8 @@
 package haste;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
@@ -27,8 +29,16 @@ public class Application {
 		String OBDX_SCHEMA_NAME = args[5];
 		String OBDX_USERNAME = args[6];
 		String OBDX_PASSWORD = args[7];
-		String DATE_SCRIPT_1 = args[8];
-		String DATE_SCRIPT_2 = args[9];
+//		String DATE_SCRIPT_1 = args[8];
+//		String DATE_SCRIPT_2 = args[9];
+		String DATE_SCRIPT_1 = "28-Aug-2017";
+		
+		Calendar cal = Calendar.getInstance();
+
+		//Add one day to current date.
+		cal.add(Calendar.DATE, -3);
+		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+		String DATE_SCRIPT_2 = format.format(cal.getTime());
 
 		logger.info("Starting application!");
 		new BannerPrinter().printBanner();
