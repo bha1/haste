@@ -28,7 +28,7 @@ public class PreparedStatementBuilder {
 			logger.fatal("failed while parsing date params");
 			e.printStackTrace();
 		}
-
+		logger.info("prepared statement looks like : "+statement.toString());
 		return statement;
 	}
 
