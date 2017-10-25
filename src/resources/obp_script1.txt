@@ -5,7 +5,7 @@
     a.application_status_state_type,
   concat(SUBSTR(a.party_names, 1, 5),'******') AS party_name,
     TO_CHAR(a.creation_date, 'DD/Mon/YY HH:MM:SS AM') as creation_date,
-    '=IFERROR(VLOOKUP(COLUMN_ROW,''Reference number''!A:B,2,FALSE),"")' as reference_number,
+    'IFERROR(VLOOKUP(COLUMN_ROW,''Reference number''!A:B,2,FALSE),"")' as reference_number,
     k.kyc_status,
     z.perf_elec_kyc_consent
   FROM NGPCOB_SCHEMA.flx_or_submission_summary_b a,

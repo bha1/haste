@@ -52,9 +52,7 @@ public class ExcelSheetUtil {
 					String cellValue = (String) field;
 					if(cellValue.matches("^=.*")){
 						cell.setCellType(CellType.FORMULA);
-						cellValue=cellValue.replaceAll("COLUMN_ROW", "C"+rowNum);
-						logger.info(cellValue);
-						cell.setCellFormula(cellValue);
+						cell.setCellFormula(cellValue.replaceAll("COLUMN_ROW", "C"+rowNum));
 					}else{
 						cell.setCellValue((String) field);
 					}
