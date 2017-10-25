@@ -52,7 +52,7 @@ public class ExcelSheetUtil {
 					String cellValue = (String) field;
 					if(cellValue.matches("=IFERROR")){
 						cell.setCellType(CellType.FORMULA);
-						cell.setCellFormula(cellValue);
+						cell.setCellFormula(cellValue.replaceFirst("COLUMN_ROW", "C"+rowNum));
 					}else{
 						cell.setCellValue((String) field);
 					}
