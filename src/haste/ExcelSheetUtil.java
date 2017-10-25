@@ -50,9 +50,10 @@ public class ExcelSheetUtil {
 				Cell cell = row.createCell(colNum++);
 				if (field instanceof String) {
 					String cellValue = (String) field;
-					if(cellValue.matches("=IFERROR")){
+					if(cellValue.matches("COLUMN_ROW")){
 						cell.setCellType(CellType.FORMULA);
 						cellValue=cellValue.replaceAll("COLUMN_ROW", "C"+rowNum);
+						logger.info(cellValue);
 						cell.setCellFormula(cellValue);
 					}else{
 						cell.setCellValue((String) field);
