@@ -50,7 +50,7 @@ public class ExcelSheetUtil {
 				Cell cell = row.createCell(colNum++);
 				if (field instanceof String) {
 					String cellValue = (String) field;
-					if(cellValue.matches("COLUMN_ROW")){
+					if(cellValue.matches("^=.*")){
 						cell.setCellType(CellType.FORMULA);
 						cellValue=cellValue.replaceAll("COLUMN_ROW", "C"+rowNum);
 						logger.info(cellValue);
