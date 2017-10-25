@@ -80,9 +80,9 @@ public class Application {
 				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
 		generator.writeRecordSetToSheet(objArr, sheet);
-		XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
 		DataBaseConnector.closeConnection(obpConn);
 		DataBaseConnector.closeConnection(obdxConn);
+		XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
 		generator.writeSheetToDisk(workbook);
 
 		logger.info("Stopping application");
