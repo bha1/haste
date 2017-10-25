@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -48,7 +49,13 @@ public class ExcelSheetUtil {
 			for (Object field : datatype) {
 				Cell cell = row.createCell(colNum++);
 				if (field instanceof String) {
-					cell.setCellValue((String) field);
+					String cellValue = (String) field;
+					if(cellValue.matches("=IFERROR")){
+						cell.setCellType(CellType.FORMULA);
+						cell.setCellFormula(cellValue);
+					}else{
+						cell.setCellValue((String) field);
+					}
 				} else if (field instanceof Integer) {
 					cell.setCellValue((Integer) field);
 				}

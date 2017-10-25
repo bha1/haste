@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -79,7 +80,7 @@ public class Application {
 				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
 		generator.writeRecordSetToSheet(objArr, sheet);
-
+		XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
 		DataBaseConnector.closeConnection(obpConn);
 		DataBaseConnector.closeConnection(obdxConn);
 		generator.writeSheetToDisk(workbook);
