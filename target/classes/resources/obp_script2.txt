@@ -4,7 +4,7 @@
 		   e.external_id_value as MEID,
 		   a.application_status_state_type,
 		   concat(SUBSTR(a.party_names, 1, 5), '******') AS party_names,
-		   TO_CHAR(a.creation_date, 'DD/Mon/YY HH:MM:SS AM') AS creation_date,
+		   TO_CHAR(a.creation_date, 'DD/MM/YY HH24:MI:SS') AS creation_date,
 		   'IFERROR(VLOOKUP(COLUMN_ROW,''Reference number''!A:B,2,FALSE),"")' as reference_number,
 		   k.automatic_kyc_status,
 		   z.perf_elec_kyc_consent
