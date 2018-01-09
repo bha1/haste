@@ -36,8 +36,18 @@ public class Application {
 		
 		Calendar cal = Calendar.getInstance();
 
+		String dateRangeInput = args[8];
+		int dateRange = -3;
+		if(dateRangeInput != null){
+			try{
+				dateRange = -1 * Integer.parseInt(dateRangeInput);
+			}catch(NumberFormatException e){
+				logger.info("Number format incorrect");
+				logger.log(Level.ERROR, "this went wrong", e);
+			}
+		}
 		//Add one day to current date.
-		cal.add(Calendar.DATE, -3);
+		cal.add(Calendar.DATE, dateRange);
 		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
 		String DATE_SCRIPT_2 = format.format(cal.getTime());
 
