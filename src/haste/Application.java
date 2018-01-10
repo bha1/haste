@@ -32,11 +32,16 @@ public class Application {
 		String OBDX_PASSWORD = args[7];
 //		String DATE_SCRIPT_1 = args[8];
 //		String DATE_SCRIPT_2 = args[9];
+		
+		// date for DCO numbers from the beginning of time
 		String DATE_SCRIPT_1 = "28-Aug-2017";
 		
 		Calendar cal = Calendar.getInstance();
 
-		String dateRangeInput = args[8];
+		String dateRangeInput = null;
+		if(args.length > 8){
+			dateRangeInput = args[8];
+		}
 		int dateRange = -3;
 		if(dateRangeInput != null){
 			try{
@@ -50,6 +55,9 @@ public class Application {
 		cal.add(Calendar.DATE, dateRange);
 		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
 		String DATE_SCRIPT_2 = format.format(cal.getTime());
+		
+		
+		String DATE_SCRIPT_3 = "22-Nov-2017";
 
 		logger.info("Starting application!");
 		new BannerPrinter().printBanner();
@@ -90,6 +98,12 @@ public class Application {
 				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
 		generator.writeRecordSetToSheet(objArr, sheet);
+		
+		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script2.txt",
+				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_3 }));
+		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[4]);
+		generator.writeRecordSetToSheet(objArr, sheet);
+		
 		DataBaseConnector.closeConnection(obpConn);
 		DataBaseConnector.closeConnection(obdxConn);
 		XSSFFormulaEvaluator.evaluateAllFormulaCells(workbook);
