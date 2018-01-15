@@ -95,7 +95,7 @@ public class Application {
 		generator.writeRecordSetToSheet(objArr, sheet);
 
 		objArr = connector.getResponseArray(obdxConn, builder.getPreparedStatement(obdxConn, "obdx_script1.txt",
-				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
+				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_3 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 		
