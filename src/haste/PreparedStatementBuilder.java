@@ -21,8 +21,8 @@ public class PreparedStatementBuilder {
 			if (vars != null) {
 				for (int i = 0; i < vars.length; i++) {
 					vars[i] = cleanInputString(vars[i]);
+					statement.setString(i+1, vars[i]);
 				}
-				statement.setString(1, vars[0]);
 			}
 		} catch (Exception e) {
 			logger.fatal("failed while parsing date params");

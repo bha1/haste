@@ -35,7 +35,7 @@
 			<artifactId>ojdbc7</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>D:/Softwares/ojdbc7.jar</systemPath>
+			<systemPath>D:/Software/win/ojdbc7.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>

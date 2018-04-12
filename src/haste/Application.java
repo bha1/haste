@@ -34,30 +34,17 @@ public class Application {
 //		String DATE_SCRIPT_2 = args[9];
 		
 		// date for DCO numbers from the beginning of time
-		String DATE_SCRIPT_1 = "28-Aug-2017";
+		
 		
 		Calendar cal = Calendar.getInstance();
 
-		String dateRangeInput = null;
-		if(args.length > 8){
-			dateRangeInput = args[8];
-		}
-		int dateRange = -3;
-		if(dateRangeInput != null){
-			try{
-				dateRange = -1 * Integer.parseInt(dateRangeInput);
-			}catch(NumberFormatException e){
-				logger.info("Number format incorrect");
-				logger.log(Level.ERROR, "this went wrong", e);
-			}
-		}
 		//Add one day to current date.
-		cal.add(Calendar.DATE, dateRange);
 		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+		String DATE_SCRIPT_1 = format.format(cal.getTime());
+		cal.add(Calendar.DATE, -1);
 		String DATE_SCRIPT_2 = format.format(cal.getTime());
 		
-		
-		String DATE_SCRIPT_3 = "22-Nov-2017";
+
 
 		logger.info("Starting application!");
 		new BannerPrinter().printBanner();
@@ -80,28 +67,13 @@ public class Application {
 		XSSFSheet sheet = null;
 		PreparedStatementBuilder builder = new PreparedStatementBuilder();
 		Object[][] objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script1.txt",
-				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_1 }));
+				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_1,DATE_SCRIPT_2 }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[0]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 
-		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script2.txt",
-				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[1]);
-		generator.writeRecordSetToSheet(objArr, sheet);
-		
-		objArr = connector.getResponseArray(obpConn, builder.getPreparedStatement(obpConn, "obp_script3.txt",
-				HasteConstants.NGPCOB_SCHEMA, OBP_SCHEMA_NAME, new String[] { DATE_SCRIPT_2 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[2]);
-		generator.writeRecordSetToSheet(objArr, sheet);
-
 		objArr = connector.getResponseArray(obdxConn, builder.getPreparedStatement(obdxConn, "obdx_script1.txt",
-				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_3 }));
+				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_1,DATE_SCRIPT_2  }));
 		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[3]);
-		generator.writeRecordSetToSheet(objArr, sheet);
-		
-		objArr = connector.getResponseArray(obdxConn, builder.getPreparedStatement(obdxConn, "obdx_script2.txt",
-				HasteConstants.OBDX_SCHEMA, OBDX_SCHEMA_NAME, new String[] { DATE_SCRIPT_3 }));
-		sheet = generator.createNewSheetInWorkBook(workbook, HasteConstants.SHEETS[4]);
 		generator.writeRecordSetToSheet(objArr, sheet);
 		
 		DataBaseConnector.closeConnection(obpConn);
